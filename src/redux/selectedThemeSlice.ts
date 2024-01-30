@@ -1,35 +1,41 @@
-import { Theme, createTheme } from '@mui/material';
+/* eslint-disable no-param-reassign */
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { themes } from '../utils/themes';
+import { aux } from '../utils/objects/themeKeysObject';
+import { localStorageKeysObject } from '../utils/objects/localStorageKeys';
 
-const OSTheme = window
-  .matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+const { 
+  themeNames: {
+    light,
+    dark,
+  },
+} = aux;
 
-localStorage.setItem('OSTheme', OSTheme);
+const {
+  themesKeys: {
+    OSTheme,
+    theme,
+  },
+} = localStorageKeysObject;
 
-const getTheme = (themeName: string): Theme => {
-  const theme = themes.find((foundTheme) => foundTheme.themeName === themeName)
-    || { themeName: '', themeObject: createTheme() };
+const currentOSTheme = window
+  .matchMedia('(prefers-color-scheme: dark)').matches
+  ? dark
+  : light;
 
-  return createTheme(theme.themeObject);
-};
+localStorage.setItem(OSTheme, currentOSTheme);
 
-const themeNameFromLocalStorage = localStorage.getItem('theme');
+const themeNameFromLocalStorage = localStorage.getItem(theme);
 
-const initialState: Theme = themeNameFromLocalStorage
-  ? getTheme(themeNameFromLocalStorage)
-  : getTheme(OSTheme);
+const initialState: string = themeNameFromLocalStorage || currentOSTheme;
 
 const selectedThemeSlice = createSlice({
   name: 'selectedTheme',
   initialState,
   reducers: {
-    selectTheme: (_theme, action: PayloadAction<string>) => {
-      const newTheme = getTheme(action.payload);
+    selectTheme: (selectedTheme, action: PayloadAction<string>) => {
+      selectedTheme = action.payload;
 
-      localStorage.setItem('theme', action.payload);
-
-      return newTheme;
+      return selectedTheme;
     },
   },
 });
