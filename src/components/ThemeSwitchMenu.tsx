@@ -23,7 +23,8 @@ const {
 
 const localStorageThemeSubscriber = () => {
   const state = store.getState();
-  localStorage.setItem(theme, state.theme);
+
+  localStorage.setItem(theme, state.theme.name);
 };
 
 const unsubscribe = store.subscribe(localStorageThemeSubscriber); // For later (maybe)
