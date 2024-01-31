@@ -6,7 +6,7 @@ import { getTheme } from '../utils/getThemeFunction';
 
 export const MuiThemeWrapper: React.FC = () => {
   const theme = getTheme(
-    useAppSelector(state => state.theme),
+    useAppSelector(state => state.theme.name),
   );
 
   return (
