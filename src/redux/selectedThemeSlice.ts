@@ -26,16 +26,18 @@ localStorage.setItem(OSTheme, currentOSTheme);
 
 const themeNameFromLocalStorage = localStorage.getItem(theme);
 
-const initialState: string = themeNameFromLocalStorage || currentOSTheme;
+type State = {
+  name: string,
+};
+
+const initialState: State = { name: themeNameFromLocalStorage || currentOSTheme };
 
 const selectedThemeSlice = createSlice({
   name: 'selectedTheme',
   initialState,
   reducers: {
     selectTheme: (selectedTheme, action: PayloadAction<string>) => {
-      selectedTheme = action.payload;
-
-      return selectedTheme;
+      selectedTheme.name = action.payload;
     },
   },
 });
