@@ -1,5 +1,5 @@
-import { ThemeObject } from '../../types/ThemeObject';
-import { typographyObjectForThemes } from '../../utils/objects/typographyObjectForThemes';
+import { ThemeObject } from '../types/ThemeObject';
+import { typographyObjectForThemes } from './typography';
 
 export const lightTheme: ThemeObject = {
   themeName: 'light',

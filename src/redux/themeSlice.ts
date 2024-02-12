@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { aux } from '../utils/objects/themeKeysObject';
+import { aux } from '../utils/objects/themeKeys';
 import { localStorageKeysObject } from '../utils/objects/localStorageKeys';
 
 const { 
@@ -32,7 +32,7 @@ type State = {
 
 const initialState: State = { name: themeNameFromLocalStorage || currentOSTheme };
 
-const selectedThemeSlice = createSlice({
+const themeSlice = createSlice({
   name: 'selectedTheme',
   initialState,
   reducers: {
@@ -42,5 +42,5 @@ const selectedThemeSlice = createSlice({
   },
 });
 
-export const { selectTheme } = selectedThemeSlice.actions;
-export default selectedThemeSlice.reducer;
+export const { selectTheme } = themeSlice.actions;
+export default themeSlice.reducer;

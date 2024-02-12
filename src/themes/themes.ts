@@ -1,7 +1,7 @@
 import { ThemeObject } from '../types/ThemeObject';
 
-import { darkTheme } from './themesObjects/darkTheme';
-import { lightTheme } from './themesObjects/lightTheme';
+import { darkTheme } from './darkTheme';
+import { lightTheme } from './lightTheme';
 
 export const themes: ThemeObject[] = [
   darkTheme,
