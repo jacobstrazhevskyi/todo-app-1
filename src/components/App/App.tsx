@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { Box, Container, styled } from '@mui/material';
-import { TodoAppTitle } from './TodoAppTitle';
-import { ThemeSwitchMenu } from './ThemeSwitchMenu';
+import { TodoAppTitle } from '../Title/Title';
+import { ThemeSwitchMenu } from '../ThemeSwitchMenu/ThemeSwitchMenu';
 
-const FlexBox = styled(Box)({
+const StyledBox = styled(Box)({
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
@@ -13,9 +13,9 @@ const FlexBox = styled(Box)({
 
 export const App: React.FC = () => (
   <Container>
-    <FlexBox>
+    <StyledBox>
       <TodoAppTitle />
       <ThemeSwitchMenu />
-    </FlexBox>
+    </StyledBox>
   </Container>
 );

@@ -5,31 +5,16 @@ import uuid from 'react-uuid';
 import {
   MenuItem,
   Select,
+  SelectChangeEvent,
   styled,
 } from '@mui/material';
 
-import { useAppDispatch } from '../app/hooks/useAppDispatch';
-import { selectTheme } from '../redux/selectedThemeSlice';
-import { themes } from '../themes/themes';
-import { store } from '../app/store';
+import { useAppDispatch } from '../../utils/hooks/useAppDispatch';
+// import { useDispatch } from 'react-redux';
+import { selectTheme } from '../../redux/themeSlice';
+import { themes } from '../../themes/themes';
 
-import { localStorageKeysObject } from '../utils/objects/localStorageKeys';
-
-const { 
-  themesKeys: {
-    theme,
-  },
-} = localStorageKeysObject;
-
-const localStorageThemeSubscriber = () => {
-  const state = store.getState();
-
-  localStorage.setItem(theme, state.theme.name);
-};
-
-const unsubscribe = store.subscribe(localStorageThemeSubscriber); // For later (maybe)
-
-const getMenuItemText = (selectedThemeName: string) => {
+const prepareThemeName = (selectedThemeName: string) => {
   const themeNameSplited = selectedThemeName.split(/(?<![A-Z])(?=[A-Z])/);
 
   themeNameSplited.filter(word => word.toLowerCase() !== 'theme');
@@ -47,23 +32,29 @@ const CentredSelectMenu = styled(Select)({
 export const ThemeSwitchMenu: React.FC = () => {
   const dispatch = useAppDispatch();
 
+  const selectThemeMenuHandler = (
+    event: SelectChangeEvent<unknown>,
+  ) => {
+    const { value } = event.target;
+
+    dispatch(selectTheme(value as string));
+  };
+
   return (
     <CentredSelectMenu
       autoWidth
       defaultValue={
         localStorage.getItem('theme') || localStorage.getItem('OSTheme')
       }
-      onChange={(event) => {
-        dispatch(selectTheme(event.target.value as string));
-      }}
+      onChange={selectThemeMenuHandler}
       variant="standard"
     >
-      {themes.map((themeFromStorage) => (
+      {themes.map(({ themeName }) => (
         <MenuItem
-          value={themeFromStorage.themeName}
+          value={themeName}
           key={uuid()}
         >
-          {getMenuItemText(themeFromStorage.themeName)}
+          {prepareThemeName(themeName)}
         </MenuItem>
       ))}
     </CentredSelectMenu>
