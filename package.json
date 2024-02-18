@@ -45,13 +45,8 @@
     ]
   },
   "devDependencies": {
-<<<<<<< HEAD
     "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
-=======
-    "@typescript-eslint/eslint-plugin": "^5.41.0",
-    "@typescript-eslint/parser": "^5.41.0",
->>>>>>> f42ad71e3d60ee5b627b6862c58b87fc0389b3a9
     "eslint": "^8.56.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.29.1",
