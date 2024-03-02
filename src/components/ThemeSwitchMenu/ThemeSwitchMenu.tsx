@@ -10,9 +10,11 @@ import {
 } from '@mui/material';
 
 import { useAppDispatch } from '../../utils/hooks/useAppDispatch';
-// import { useDispatch } from 'react-redux';
 import { selectTheme } from '../../redux/themeSlice';
 import { themes } from '../../themes/themes';
+import { localStorageKeys } from '../../auxFiles/localStorageKeys';
+
+import { aux } from '../../auxFiles/OSTheme';
 
 const prepareThemeName = (selectedThemeName: string) => {
   const themeNameSplited = selectedThemeName.split(/(?<![A-Z])(?=[A-Z])/);
@@ -40,12 +42,20 @@ export const ThemeSwitchMenu: React.FC = () => {
     dispatch(selectTheme(value as string));
   };
 
+  const {
+    themesKeys: {
+      theme,
+    },
+  } = localStorageKeys;
+
+  const { currentOSTheme } = aux;
+
+  const defaultSelectMenuValue = localStorage.getItem(theme) || currentOSTheme;
+
   return (
     <CentredSelectMenu
       autoWidth
-      defaultValue={
-        localStorage.getItem('theme') || localStorage.getItem('OSTheme')
-      }
+      defaultValue={defaultSelectMenuValue}
       onChange={selectThemeMenuHandler}
       variant="standard"
     >

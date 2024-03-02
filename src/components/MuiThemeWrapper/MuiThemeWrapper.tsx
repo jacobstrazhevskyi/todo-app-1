@@ -5,40 +5,42 @@ import { App } from '../App/App';
 import { useAppSelector } from '../../utils/hooks/useAppSelector';
 import { getTheme } from '../../utils/getTheme';
 import { localStorageKeys } from '../../auxFiles/localStorageKeys';
+import { useAppDispatch } from '../../utils/hooks/useAppDispatch';
+import { selectTheme } from '../../redux/themeSlice';
+import { aux as auxOSTheme } from '../../auxFiles/OSTheme';
 
-// import useLocalStorage from '../../utils/hooks/useLocalStorage';
+const {
+  currentOSTheme,
+} = auxOSTheme;
 
 const {
   themesKeys: {
-    OSTheme,
+    theme,
   },
 } = localStorageKeys;
 
-const OSThemeMatchMedia = window
-  .matchMedia('(prefers-color-scheme: dark)');
-
 export const MuiThemeWrapper: React.FC = () => {
   const themeName = useAppSelector(state => state.theme.name);
-
-  // const [themeNameFromStorage, setThemeNameFromStorage] = useLocalStorage('theme', themeName);
+  const dispatch = useAppDispatch();
   
+  const themeNameFromLocalStorage = localStorage.getItem(theme) || '';
+
   useEffect(() => {
-    localStorage.setItem('theme', themeName);
-    // setThemeNameFromStorage(themeName);
+    localStorage.setItem(theme, themeName);
   }, [themeName]);
 
   useEffect(() => {
-    const currentOSTheme = OSThemeMatchMedia.matches
-      ? 'dark' 
-      : 'light';
+    dispatch(
+      selectTheme(
+        themeNameFromLocalStorage || currentOSTheme,
+      ),
+    );
+  }, []);
 
-    localStorage.setItem(OSTheme, currentOSTheme);
-  }, [OSThemeMatchMedia]);
-  
-  const theme = getTheme(themeName);
+  const selectedTheme = getTheme(themeName);
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={selectedTheme}>
       <CssBaseline />
       <App />
     </ThemeProvider>
