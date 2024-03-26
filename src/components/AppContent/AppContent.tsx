@@ -1,21 +1,30 @@
 import React from 'react';
 
-import { Box, styled } from '@mui/material';
-import { TodoAppTitle } from '../Title/Title';
-import { ThemeSwitchMenu } from '../ThemeSwitchMenu';
-import { TodosList } from '../TodosList/TodosList';
+import {
+  Route,
+  Routes,
+} from 'react-router-dom';
 
-const StyledBox = styled(Box)({
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-});
+import { TodoListPage } from '../TodoListPage';
+import { NotFoundPage } from '../NotFoundPage';
+import { CreateTodoPage } from '../CreateTodoPage';
 
 export const AppContent: React.FC = () => (
-  <StyledBox>
-    <TodoAppTitle />
-    <ThemeSwitchMenu />
-    <TodosList />
-  </StyledBox>
+  <Routes>
+    <Route
+      path="/"
+      element={<TodoListPage />}
+    />
+    <Route
+      path="/edit/:todoId"
+    />
+    <Route
+      path="/create"
+      element={<CreateTodoPage />}
+    />
+    <Route 
+      path="*"
+      element={<NotFoundPage />}
+    />
+  </Routes>
 );

@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { Todo } from '../types/Todo';
 
-const initialState: Todo[] = [
+const initialTodos: Todo[] = [
   {
     id: 1,
     name: 'cook dinner',
@@ -27,7 +27,7 @@ const initialState: Todo[] = [
 
 const todosSlice = createSlice({
   name: 'todos',
-  initialState,
+  initialState: initialTodos,
   reducers: {
     addTodo: (todos, action: PayloadAction<Todo>) => {
       const newTodo = action.payload;
