@@ -52,6 +52,7 @@
         "json": "always"
       }
     ],
+    "eslint-plugin-import/no-unresolved": "off",
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
     "react/jsx-filename-extension": [
       2,
