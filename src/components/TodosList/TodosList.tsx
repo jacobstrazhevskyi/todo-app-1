@@ -1,28 +1,17 @@
 import React from 'react';
 
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { 
+  Paper,
+  styled,
+} from '@mui/material';
+import { TodoListContent } from '../TodoListContent/TodoListContent';
 
-import { useAppSelector } from '../../utils/hooks/useAppSelector';
+const StyledPaper = styled(Paper)({
+  width: '100%',
+});
 
-const columns: GridColDef[] = [
-  { field: 'name', headerName: 'Todo Name' },
-  { field: 'description', headerName: 'Description' },
-  { field: 'creationDate', headerName: 'Creation Date' },
-  { field: 'modificationDate', headerName: 'Modification Date' },
-];
-
-export const TodosList: React.FC = () => {
-  const todos = useAppSelector(state => state.todos);
-
-  return (
-    <DataGrid
-      columns={columns}
-      rows={todos}
-      initialState={{
-        pagination: { paginationModel: { pageSize: 5 } },
-      }}
-      checkboxSelection
-      autoPageSize
-    />
-  );
-};
+export const TodosList: React.FC = () => (
+  <StyledPaper>
+    <TodoListContent />
+  </StyledPaper>
+);
