@@ -30,6 +30,9 @@ export const lightTheme: ThemeObject = {
         default: '#ffffff',
         paper: '#ffffff',
       },
+      error: {
+        main: '#DC4C3E',
+      },
     },
     ...typographyObjectForThemes,
   },

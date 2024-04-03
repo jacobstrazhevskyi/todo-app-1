@@ -30,6 +30,9 @@ export const darkTheme: ThemeObject = {
         secondary: '#6b675a',
         disabled: '#b81d25',
       },
+      error: {
+        main: '#DC4C3E',
+      },
     },
     ...typographyObjectForThemes,
   },
