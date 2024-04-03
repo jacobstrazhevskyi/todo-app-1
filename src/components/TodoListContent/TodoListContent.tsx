@@ -32,7 +32,7 @@ export const TodoListContent: React.FC = () => {
     const currentItems = todos.slice(startIndex, startIndex + itemsPerPage);
 
     setTodosToDisplay(currentItems);
-  }, [pageNumber]);
+  }, [pageNumber, todos]);
 
   console.log(todos);
 
