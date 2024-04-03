@@ -8,6 +8,7 @@ import { localStorageKeys } from '../../auxFiles/localStorageKeys';
 import { useAppDispatch } from '../../utils/hooks/useAppDispatch';
 import { selectTheme } from '../../redux/themeSlice';
 import { aux as auxOSTheme } from '../../auxFiles/OSTheme';
+import useLocalStorage from '../../utils/hooks/useLocalStorage';
 
 const {
   currentOSTheme,
@@ -22,11 +23,16 @@ const {
 export const MuiThemeWrapper: React.FC = () => {
   const themeName = useAppSelector(state => state.theme.name);
   const dispatch = useAppDispatch();
+
+  const [
   
-  const themeNameFromLocalStorage = localStorage.getItem(theme) || '';
+    themeNameFromLocalStorage,
+    setThemeNameFromLocalStorage,
+  
+  ] = useLocalStorage(theme, themeName);
 
   useEffect(() => {
-    localStorage.setItem(theme, themeName);
+    setThemeNameFromLocalStorage(themeName);
   }, [themeName]);
 
   useEffect(() => {
