@@ -15,6 +15,7 @@ import { themes } from '../../themes/themes';
 import { localStorageKeys } from '../../auxFiles/localStorageKeys';
 
 import { aux } from '../../auxFiles/OSTheme';
+import useLocalStorage from '../../utils/hooks/useLocalStorage';
 
 const prepareThemeName = (selectedThemeName: string) => {
   const themeNameSplited = selectedThemeName.split(/(?<![A-Z])(?=[A-Z])/);
@@ -50,7 +51,7 @@ export const ThemeSwitchMenu: React.FC = () => {
 
   const { currentOSTheme } = aux;
 
-  const defaultSelectMenuValue = localStorage.getItem(theme) || currentOSTheme;
+  const [defaultSelectMenuValue] = useLocalStorage(theme, currentOSTheme);
 
   return (
     <CentredSelectMenu
