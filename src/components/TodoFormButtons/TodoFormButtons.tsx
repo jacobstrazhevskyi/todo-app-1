@@ -1,13 +1,22 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { Box, Button, styled } from '@mui/material';
+
+import { 
+  Box,
+  Button,
+  styled,
+} from '@mui/material';
+
 import { useNavigate } from 'react-router-dom';
+
 import { useAppDispatch } from '../../utils/hooks/useAppDispatch';
-import { addTodo } from '../../redux/todosSlice';
 import { useAppSelector } from '../../utils/hooks/useAppSelector';
+
+import { addTodo } from '../../redux/todosSlice';
+
 import { AcceptingModal } from '../AcceptingModal';
 
-const StyledBox2 = styled(Box)({
+const StyledBox = styled(Box)({
   display: 'flex',
   justifyContent: 'flex-end',
   gap: '10px',
@@ -87,7 +96,7 @@ export const TodoFormButtons: React.FC<Props> = ({
   };
 
   return (
-    <StyledBox2>
+    <StyledBox>
       <Button
         onClick={cancelButtonHandler}
       >
@@ -107,6 +116,6 @@ export const TodoFormButtons: React.FC<Props> = ({
         onAccept={modalAcceptHandler}
         isWarning
       />
-    </StyledBox2>
+    </StyledBox>
   );
 };
