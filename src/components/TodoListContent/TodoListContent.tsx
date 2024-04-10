@@ -25,7 +25,12 @@ export const TodoListContent: React.FC = () => {
 
   const { pageNumber } = useParams();
 
+  if (pageNumber > ) {
+
+  }
+
   useEffect(() => {
+    console.log(todos);
     const currentPage = Number(pageNumber) || 1;
     const itemsPerPage = 10;
 

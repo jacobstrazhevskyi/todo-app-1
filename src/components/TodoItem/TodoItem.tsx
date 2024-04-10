@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   ListItem,
@@ -13,20 +13,33 @@ type Props = {
 };
 
 export const TodoItem: React.FC<Props> = ({ todo }) => {
-  const { id, name } = todo;
+  const { id, name, completed } = todo;
+
+  const [hovered, setHovered] = useState(false);
 
   return (
     <ListItem
+      onMouseEnter={() => {
+        setHovered(true);
+        console.log('hovered');
+      }}
+      onMouseLeave={() => {
+        setHovered(false);
+        console.log('unhovered');
+      }}
       disablePadding
       secondaryAction={(
-        <TodoItemSecondaryAction
-          todoId={id}
-        />
+        hovered ? (
+          <TodoItemSecondaryAction
+            todoId={id}
+          />
+        ) : ('')
       )}
     >
       <TodoItemContent
         todoId={id}
         todoName={name}
+        completed={completed}
       />
     </ListItem>
   );

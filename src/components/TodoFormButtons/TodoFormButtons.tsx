@@ -1,18 +1,18 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 
-import { 
+import {
   Box,
   Button,
   styled,
 } from '@mui/material';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useAppDispatch } from '../../utils/hooks/useAppDispatch';
 import { useAppSelector } from '../../utils/hooks/useAppSelector';
 
-import { addTodo } from '../../redux/todosSlice';
+import { addTodo, editTodo } from '../../redux/todosSlice';
 
 import { AcceptingModal } from '../AcceptingModal';
 
@@ -44,6 +44,8 @@ export const TodoFormButtons: React.FC<Props> = ({
   const todos = useAppSelector(state => state.todos);
   const navigate = useNavigate();
 
+  const { todoId } = useParams();
+
   const [modalOpened, setModalOpened] = useState(false);
 
   const checkForErrors = () => {
@@ -53,9 +55,9 @@ export const TodoFormButtons: React.FC<Props> = ({
     }
   };
 
-  const creationHandler = () => {
+  const todoCreationHandler = () => {
     checkForErrors();
-    
+
     if (!todoName.length) {
       return;
     }
@@ -70,26 +72,49 @@ export const TodoFormButtons: React.FC<Props> = ({
       name: todoName,
       description: todoDescription,
       creationDate: formattedDate,
+      completed: false,
       modificationDate: formattedDate,
     }));
 
     navigate(-1);
   };
 
-  const buttonHandler = () => {
-    if (isTodoCreation) {
-      creationHandler();
-    } else {
+  const todoEditHandler = () => {
+    checkForErrors();
+
+    if (!todoName.length) {
       return;
     }
-  };
 
-  const modalAcceptHandler = () => {    
+    const formattedDate = new Date()
+      .toISOString()
+      .slice(0, 19)
+      .replace('T', ' ');
+
+    dispatch(editTodo({
+      ...todos[Number(todoId) - 1],
+      modificationDate: formattedDate,
+      description: todoDescription,
+      name: todoName,
+    }));
+    
     navigate(-1);
   };
 
   const handleModalOpen = () => setModalOpened(true);
   const handleModalClose = () => setModalOpened(false);
+
+  const buttonHandler = () => {
+    if (isTodoCreation) {
+      todoCreationHandler();
+    } else {
+      todoEditHandler();
+    }
+  };
+
+  const modalAcceptHandler = () => {
+    navigate(-1);
+  };
 
   const cancelButtonHandler = () => {
     handleModalOpen();
@@ -111,7 +136,7 @@ export const TodoFormButtons: React.FC<Props> = ({
       <AcceptingModal
         opened={modalOpened}
         handleClose={handleModalClose}
-        title="Are you sure you want to discard your current task?"
+        title="Are you sure you want to discard your current changes?"
         acceptButtonLabel="Discard"
         onAccept={modalAcceptHandler}
         isWarning

@@ -6,8 +6,9 @@ import {
 } from 'react-router-dom';
 
 import { TodoListPage } from '../TodoListPage';
-import { NotFoundPage } from '../NotFoundPage';
+import { EditTodoPage } from '../EditTodoPage';
 import { CreateTodoPage } from '../CreateTodoPage';
+import { NotFoundPage } from '../NotFoundPage';
 
 export const AppContent: React.FC = () => (
   <Routes>
@@ -22,12 +23,13 @@ export const AppContent: React.FC = () => (
     </Route>
     <Route
       path="/edit/:todoId"
+      element={<EditTodoPage />}
     />
     <Route
       path="/create"
       element={<CreateTodoPage />}
     />
-    <Route 
+    <Route
       path="*"
       element={<NotFoundPage />}
     />

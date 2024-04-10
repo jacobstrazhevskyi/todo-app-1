@@ -30,6 +30,7 @@ const prepareThemeName = (selectedThemeName: string) => {
 
 const CentredSelectMenu = styled(Select)({
   margin: '0 auto',
+  marginBottom: '30px',
 });
 
 export const ThemeSwitchMenu: React.FC = () => {
