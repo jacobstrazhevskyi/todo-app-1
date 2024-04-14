@@ -38,6 +38,7 @@
     "no-useless-return": "off",
     "react/jsx-props-no-spreading": "off",
     "consistent-return": "off",
+    "react/require-default-props": "off",
     "no-console": [
       "warn",
       { "allow": ["error"] }

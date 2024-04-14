@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../utils/hooks/useAppDispatch';
 import { addTodo } from '../../redux/todosSlice';
 import { useAppSelector } from '../../utils/hooks/useAppSelector';
-import { AcceptingModal } from '../AcceptingModal';
+import { Modal } from '../Modal';
 
 const StyledBox2 = styled(Box)({
   display: 'flex',
@@ -46,7 +46,7 @@ export const TodoFormButtons: React.FC<Props> = ({
 
   const creationHandler = () => {
     checkForErrors();
-    
+
     if (!todoName.length) {
       return;
     }
@@ -75,7 +75,7 @@ export const TodoFormButtons: React.FC<Props> = ({
     }
   };
 
-  const modalAcceptHandler = () => {    
+  const modalAcceptHandler = () => {
     navigate(-1);
   };
 
@@ -99,13 +99,12 @@ export const TodoFormButtons: React.FC<Props> = ({
       >
         {buttonLabel}
       </Button>
-      <AcceptingModal
+      <Modal
         opened={modalOpened}
         handleClose={handleModalClose}
         title="Are you sure you want to discard your current task?"
-        acceptButtonLabel="Discard"
+        confirmButtonLabel="Discard"
         onAccept={modalAcceptHandler}
-        isWarning
       />
     </StyledBox2>
   );
