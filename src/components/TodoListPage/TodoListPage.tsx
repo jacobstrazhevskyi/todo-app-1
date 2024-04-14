@@ -8,6 +8,7 @@ import {
 import { TodoAppTitle } from '../Title/Title';
 import { ThemeSwitchMenu } from '../ThemeSwitchMenu';
 import { TodosList } from '../TodosList/TodosList';
+import { TodoListPagination } from '../TodoListPagination';
 
 const StyledBox = styled(Box)({
   width: '100%',
@@ -21,5 +22,6 @@ export const TodoListPage: React.FC = () => (
     <TodoAppTitle />
     <ThemeSwitchMenu />
     <TodosList />
+    <TodoListPagination />
   </StyledBox>
 );
