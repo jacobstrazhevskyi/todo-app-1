@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import {
   ListItem,
@@ -26,11 +26,9 @@ export const TodoItem: React.FC<Props> = ({ todo }) => {
     <StyledListItem
       disablePadding
       secondaryAction={(
-        hovered ? (
-          <TodoItemSecondaryAction
-            todoId={id}
-          />
-        ) : ('')
+        <TodoItemSecondaryAction
+          todoId={id}
+        />
       )}
     >
       <TodoItemContent
