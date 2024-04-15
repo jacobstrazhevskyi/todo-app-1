@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../utils/hooks/useAppDispatch';
 import { deleteTodo } from '../../redux/todosSlice';
 import { IconButtonWithTooltipWrapper } from '../IconButtonWithTooltipWrapper';
-import { AcceptingModal } from '../AcceptingModal';
+import { Modal } from '../Modal';
 
 type Props = {
   todoId: number,
@@ -71,12 +71,11 @@ export const TodoItemSecondaryAction: React.FC<Props> = ({
       >
         <DeleteIcon />
       </IconButtonWithTooltipWrapper>
-      <AcceptingModal
+      <Modal
         opened={modalOpen}
-        acceptButtonLabel="Delete"
+        confirmButtonLabel="Delete"
         handleClose={handleModalClose}
         onAccept={handleModalAccept}
-        isWarning
         title="Are you sure you want to delete current task?"
       />
     </StyledBox>
