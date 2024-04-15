@@ -1,13 +1,20 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { Box, Button, styled } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+
+import {
+  Box,
+  Button,
+  styled,
+} from '@mui/material';
+
+import { useNavigate, useParams } from 'react-router-dom';
+
 import { useAppDispatch } from '../../utils/hooks/useAppDispatch';
-import { addTodo } from '../../redux/todosSlice';
 import { useAppSelector } from '../../utils/hooks/useAppSelector';
 import { Modal } from '../Modal';
+import { addTodo, editTodo } from '../../redux/todosSlice';
 
-const StyledBox2 = styled(Box)({
+const StyledBox = styled(Box)({
   display: 'flex',
   justifyContent: 'flex-end',
   gap: '10px',
@@ -35,6 +42,8 @@ export const TodoFormButtons: React.FC<Props> = ({
   const todos = useAppSelector(state => state.todos);
   const navigate = useNavigate();
 
+  const { todoId } = useParams();
+
   const [modalOpened, setModalOpened] = useState(false);
 
   const checkForErrors = () => {
@@ -44,7 +53,7 @@ export const TodoFormButtons: React.FC<Props> = ({
     }
   };
 
-  const creationHandler = () => {
+  const todoCreationHandler = () => {
     checkForErrors();
 
     if (!todoName.length) {
@@ -61,17 +70,43 @@ export const TodoFormButtons: React.FC<Props> = ({
       name: todoName,
       description: todoDescription,
       creationDate: formattedDate,
+      completed: false,
       modificationDate: formattedDate,
     }));
 
     navigate(-1);
   };
 
+  const todoEditHandler = () => {
+    checkForErrors();
+
+    if (!todoName.length) {
+      return;
+    }
+
+    const formattedDate = new Date()
+      .toISOString()
+      .slice(0, 19)
+      .replace('T', ' ');
+
+    dispatch(editTodo({
+      ...todos[Number(todoId) - 1],
+      modificationDate: formattedDate,
+      description: todoDescription,
+      name: todoName,
+    }));
+    
+    navigate(-1);
+  };
+
+  const handleModalOpen = () => setModalOpened(true);
+  const handleModalClose = () => setModalOpened(false);
+
   const buttonHandler = () => {
     if (isTodoCreation) {
-      creationHandler();
+      todoCreationHandler();
     } else {
-      return;
+      todoEditHandler();
     }
   };
 
@@ -79,15 +114,12 @@ export const TodoFormButtons: React.FC<Props> = ({
     navigate(-1);
   };
 
-  const handleModalOpen = () => setModalOpened(true);
-  const handleModalClose = () => setModalOpened(false);
-
   const cancelButtonHandler = () => {
     handleModalOpen();
   };
 
   return (
-    <StyledBox2>
+    <StyledBox>
       <Button
         onClick={cancelButtonHandler}
       >
@@ -106,6 +138,6 @@ export const TodoFormButtons: React.FC<Props> = ({
         confirmButtonLabel="Discard"
         onAccept={modalAcceptHandler}
       />
-    </StyledBox2>
+    </StyledBox>
   );
 };

@@ -4,7 +4,8 @@ import {
   Paper,
   styled,
 } from '@mui/material';
-import { TodoListContent } from '../TodoListContent/TodoListContent';
+
+import { TodoListContent } from '../TodoListContent';
 
 const StyledPaper = styled(Paper)({
   width: '100%',

@@ -1,5 +1,10 @@
-import { Box, TextField, styled } from '@mui/material';
 import React, { ChangeEvent } from 'react';
+
+import {
+  Box,
+  TextField,
+  styled,
+} from '@mui/material';
 
 const StyledTodoNameTextField = styled(TextField)({
   borderBottom: 'none',
@@ -12,6 +17,7 @@ const StyledBox = styled(Box)({
   gap: '20px',
 });
 
+// i dont know why eslint angry on type Props
 type Props = {
   todoName: string,
   // eslint-disable-next-line no-unused-vars
