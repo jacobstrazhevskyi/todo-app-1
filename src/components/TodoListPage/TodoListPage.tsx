@@ -5,8 +5,6 @@ import {
   styled,
 } from '@mui/material';
 
-import { TodoAppTitle } from '../Title/Title';
-import { ThemeSwitchMenu } from '../ThemeSwitchMenu';
 import { TodosList } from '../TodosList/TodosList';
 import { TodoListPagination } from '../TodoListPagination';
 
@@ -19,8 +17,6 @@ const StyledBox = styled(Box)({
 
 export const TodoListPage: React.FC = () => (
   <StyledBox>
-    <TodoAppTitle />
-    <ThemeSwitchMenu />
     <TodosList />
     <TodoListPagination />
   </StyledBox>
