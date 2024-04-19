@@ -10,7 +10,7 @@ import {
 import { styled } from '@mui/system';
 
 import { ModalMainContent } from '../ModalMainContent';
-import { CloseButton } from '../CloseButton';
+import { ModalCloseButton } from '../ModalCloseButton';
 
 type Props = {
   opened: boolean,
@@ -52,7 +52,7 @@ export const Modal: React.FC<Props> = ({
   >
     <Fade in={opened}>
       <StyledBox>
-        <CloseButton 
+        <ModalCloseButton 
           handleClose={handleClose}
         />
         <ModalMainContent 
