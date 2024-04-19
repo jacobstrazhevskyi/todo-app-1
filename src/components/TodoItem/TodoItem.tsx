@@ -20,7 +20,12 @@ const StyledListItem = styled(ListItem)({
 });
 
 export const TodoItem: React.FC<Props> = ({ todo }) => {
-  const { id, name, completed } = todo;
+  const {
+    id,
+    name,
+    completed,
+    description,
+  } = todo;
 
   return (
     <StyledListItem
@@ -34,6 +39,7 @@ export const TodoItem: React.FC<Props> = ({ todo }) => {
       <TodoItemContent
         todoId={id}
         todoName={name}
+        todoDescription={description}
         completed={completed}
       />
     </StyledListItem>

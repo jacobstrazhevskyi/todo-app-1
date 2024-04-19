@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   Checkbox,
@@ -9,10 +9,13 @@ import {
 } from '@mui/material';
 import { useAppDispatch } from '../../utils/hooks/useAppDispatch';
 import { toggleCompletedStatus } from '../../redux/todosSlice';
+import { useAppSelector } from '../../utils/hooks/useAppSelector';
+import useLocalStorage from '../../utils/hooks/useLocalStorage';
 
 type Props = {
-  todoName: string,
   todoId: number,
+  todoName: string,
+  todoDescription: string,
   completed: boolean,
 }
 
@@ -20,7 +23,9 @@ export const TodoItemContent: React.FC<Props> = ({
   todoName,
   todoId,
   completed,
+  todoDescription,
 }) => {
+  const todos = useAppSelector(state => state.todos);
   const checkBoxListLabel = `checkbox-list-label-${todoId}`;
   const dispatch = useAppDispatch();
 
@@ -28,18 +33,28 @@ export const TodoItemContent: React.FC<Props> = ({
     textDecoration: completed ? 'line-through' : '', 
   });
 
+  const setTodosFromLocalStorage = useLocalStorage('todos', todos)[1];
+
+  useEffect(() => {
+    setTodosFromLocalStorage(todos);
+  }, [todos]);
+
+  const toggleCheckbox = () => {
+    dispatch(toggleCompletedStatus(todoId));
+  };
+
   return (
-    <ListItemButton>
+    <ListItemButton
+      onClick={toggleCheckbox}
+    >
       <ListItemIcon>
         <Checkbox
           inputProps={{ 'aria-labelledby': checkBoxListLabel }}
-          onChange={() => {
-            dispatch(toggleCompletedStatus(todoId));
-          }}
           checked={completed}
         />
       </ListItemIcon>
       <StyledListItemText
+        secondary={todoDescription}
         primary={todoName}  
         id={checkBoxListLabel} 
         aria-label={checkBoxListLabel}
