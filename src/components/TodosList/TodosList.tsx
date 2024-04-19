@@ -9,6 +9,7 @@ import { TodoListContent } from '../TodoListContent';
 
 const StyledPaper = styled(Paper)({
   width: '100%',
+  paddingTop: '10px',
 });
 
 export const TodosList: React.FC = () => (
