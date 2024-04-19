@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 import { HashRouter as Router } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
-import { MuiThemeWrapper } from './components/MuiThemeWrapper/MuiThemeWrapper';
+import { MuiThemeWrapper } from './components/MuiThemeWrapper';
 import { store } from './redux/store';
 
 const root = ReactDOM.createRoot(
