@@ -1,20 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import {
   Box,
   styled,
 } from '@mui/material';
 
-import DeleteIcon from '@mui/icons-material/Delete';
-import InfoIcon from '@mui/icons-material/Info';
-import EditIcon from '@mui/icons-material/Edit';
-
-import { useNavigate } from 'react-router-dom';
-
-import { useAppDispatch } from '../../utils/hooks/useAppDispatch';
-import { deleteTodo } from '../../redux/todosSlice';
-import { IconButtonWithTooltipWrapper } from '../IconButtonWithTooltipWrapper';
-import { Modal } from '../Modal';
+import { DeleteTodoButton } from '../DeleteTodoButton';
+import { EditTodoButton } from '../EditTodoButton';
+import { TodoInfoButton } from '../TodoInfoButton/TodoInfoButton';
 
 type Props = {
   todoId: number,
@@ -27,57 +20,18 @@ const StyledBox = styled(Box)({
 
 export const TodoItemSecondaryAction: React.FC<Props> = ({
   todoId,
-}) => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const handleModalOpen = () => setModalOpen(true);
-  const handleModalClose = () => setModalOpen(false);
-
-  const handleModalAccept = () => {
-    dispatch(
-      deleteTodo(todoId),
-    );
-  };
-
-  const handleTodoDelete = () => {
-    handleModalOpen();
-  };
-
-  const handleTodoEdit = () => {
-    navigate(`edit/${todoId}`);
-  };
-
-  return (
-    <StyledBox
-      className="todo-item-secondary-actions"
-    >
-      <IconButtonWithTooltipWrapper
-        tooltipTitle="Todo Info"
-      >
-        <InfoIcon />
-      </IconButtonWithTooltipWrapper>
-      <IconButtonWithTooltipWrapper
-        tooltipTitle="Edit todo"
-        onClick={handleTodoEdit}
-      >
-        <EditIcon />
-      </IconButtonWithTooltipWrapper>
-      <IconButtonWithTooltipWrapper
-        tooltipTitle="Delete todo"
-        onClick={handleTodoDelete}
-      >
-        <DeleteIcon />
-      </IconButtonWithTooltipWrapper>
-      <Modal
-        opened={modalOpen}
-        confirmButtonLabel="Delete"
-        handleClose={handleModalClose}
-        onAccept={handleModalAccept}
-        title="Are you sure you want to delete current task?"
-      />
-    </StyledBox>
-  );
-};
+}) => (
+  <StyledBox
+    className="todo-item-secondary-actions"
+  >
+    <TodoInfoButton
+      todoId={todoId}
+    />
+    <EditTodoButton
+      todoId={todoId}
+    />
+    <DeleteTodoButton
+      todoId={todoId}
+    />
+  </StyledBox>
+);
