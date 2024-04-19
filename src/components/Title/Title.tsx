@@ -6,6 +6,20 @@ const CentredText = styled(Typography)({
   textAlign: 'center',
 });
 
-export const TodoAppTitle: React.FC = () => (
-  <CentredText variant="h3">Todo App</CentredText>
-);
+type Props = {
+  titleText?: string,
+  children?: React.ReactNode,
+};
+
+export const Title: React.FC<Props> = ({
+  titleText,
+  children,
+}) => {
+  const titleContent = titleText || children;
+
+  return (
+    <CentredText variant="h3">
+      {titleContent}
+    </CentredText>
+  );
+};
