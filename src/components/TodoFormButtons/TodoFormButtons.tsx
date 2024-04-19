@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import {
   Box,
@@ -12,7 +12,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../utils/hooks/useAppDispatch';
 import { useAppSelector } from '../../utils/hooks/useAppSelector';
 import { Modal } from '../Modal';
-import { addTodo, editTodo } from '../../redux/todosSlice';
+import { addTodo, editTodo, setTodos } from '../../redux/todosSlice';
+import useLocalStorage from '../../utils/hooks/useLocalStorage';
 
 const StyledBox = styled(Box)({
   display: 'flex',
@@ -42,6 +43,9 @@ export const TodoFormButtons: React.FC<Props> = ({
   const todos = useAppSelector(state => state.todos);
   const navigate = useNavigate();
 
+  const { current: todoNameRef } = useRef(todoName);
+  const { current: todoDescriptionRef } = useRef(todoDescription);
+
   const { todoId } = useParams();
 
   const [modalOpened, setModalOpened] = useState(false);
@@ -65,14 +69,18 @@ export const TodoFormButtons: React.FC<Props> = ({
       .slice(0, 19)
       .replace('T', ' ');
 
-    dispatch(addTodo({
+    const newTodo = {
       id: todos.length + 1,
       name: todoName,
       description: todoDescription,
       creationDate: formattedDate,
       completed: false,
       modificationDate: formattedDate,
-    }));
+    };
+
+    dispatch(
+      addTodo(newTodo),
+    );
 
     navigate(-1);
   };
@@ -89,15 +97,33 @@ export const TodoFormButtons: React.FC<Props> = ({
       .slice(0, 19)
       .replace('T', ' ');
 
-    dispatch(editTodo({
+    const updatedTodo = {
       ...todos[Number(todoId) - 1],
       modificationDate: formattedDate,
       description: todoDescription,
       name: todoName,
-    }));
+    };
+
+    dispatch(
+      editTodo(updatedTodo),
+    );
     
     navigate(-1);
   };
+
+  const [todosFromLocalStorage, setTodosFromLocalStorage] = useLocalStorage('todos', todos);
+
+  useEffect(() => {
+    setTodosFromLocalStorage(todos);
+  }, [todos]);
+
+  useEffect(() => {
+    dispatch(
+      setTodos(
+        todosFromLocalStorage,  
+      ),
+    );
+  }, []);
 
   const handleModalOpen = () => setModalOpened(true);
   const handleModalClose = () => setModalOpened(false);
@@ -114,7 +140,18 @@ export const TodoFormButtons: React.FC<Props> = ({
     navigate(-1);
   };
 
+  const checkForUpdates = () => (
+    todoNameRef === todoName 
+      && todoDescriptionRef === todoDescription
+  );
+
   const cancelButtonHandler = () => {
+    if (checkForUpdates()) {
+      navigate(-1);
+
+      return;
+    }
+
     handleModalOpen();
   };
 
