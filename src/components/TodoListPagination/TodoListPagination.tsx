@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   Box,
@@ -6,12 +6,14 @@ import {
   styled,
 } from '@mui/material';
 
-import { 
-  useNavigate, 
+import {
+  useNavigate,
   useParams,
+  useSearchParams,
 } from 'react-router-dom';
 
 import { useAppSelector } from '../../utils/hooks/useAppSelector';
+import { getSearchWith } from '../../utils/getSearchWith';
 
 const StyledBox3 = styled(Box)({
   width: '100%',
@@ -20,18 +22,49 @@ const StyledBox3 = styled(Box)({
   marginTop: '10px',
 });
 
-export const TodoListPagination: React.FC = () => {
-  const todos = useAppSelector(state => state.todos);
-  const pageCount = Math.ceil(todos.length / 10);
+type CheckForPageCorectnessProps = {
+  countOfPage: number,
+  numberOfPage: string | undefined,
+  searchParamsCurrent: string,
+};
 
-  const { pageNumber } = useParams();
+export const TodoListPagination: React.FC = () => {
+  const todos = useAppSelector(state => state.filtredTodos);
 
   const [page, setPage] = useState(1);
+
+  const pageCount = Math.ceil(todos.length / 10);
+  const { pageNumber } = useParams();
+
+  const [searchParams] = useSearchParams();
+  const currentSearchParams = getSearchWith(searchParams, {});
+
   const navigate = useNavigate();
+
+  const checkPageCorrectness = ({
+    countOfPage,
+    numberOfPage,
+    searchParamsCurrent,
+  }: CheckForPageCorectnessProps) => {
+    if (!countOfPage) {
+      return;
+    }
+
+    if (Number(numberOfPage) > countOfPage) {
+      setPage(countOfPage);
+      navigate(`./${countOfPage}?${searchParamsCurrent}`);
+    }
+  };
+
+  useEffect(() => checkPageCorrectness({
+    countOfPage: pageCount,
+    numberOfPage: pageNumber,
+    searchParamsCurrent: currentSearchParams,
+  }), [pageNumber, currentSearchParams, todos]);
 
   const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
-    navigate(`./${value}`);
+    navigate(`./${value}?${currentSearchParams}`);
   };
 
   return (

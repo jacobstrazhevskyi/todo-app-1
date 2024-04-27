@@ -7,7 +7,6 @@ import {
 
 import { DeleteTodoButton } from '../DeleteTodoButton';
 import { EditTodoButton } from '../EditTodoButton';
-import { TodoInfoButton } from '../TodoInfoButton/TodoInfoButton';
 
 type Props = {
   todoId: number,
@@ -24,9 +23,6 @@ export const TodoItemSecondaryAction: React.FC<Props> = ({
   <StyledBox
     className="todo-item-secondary-actions"
   >
-    <TodoInfoButton
-      todoId={todoId}
-    />
     <EditTodoButton
       todoId={todoId}
     />

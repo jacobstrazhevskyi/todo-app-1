@@ -14,6 +14,7 @@ import {
 
 import {
   useParams,
+  useSearchParams,
 } from 'react-router-dom';
 
 import { useAppSelector } from '../../utils/hooks/useAppSelector';
@@ -25,6 +26,11 @@ import useLocalStorage from '../../utils/hooks/useLocalStorage';
 import { useAppDispatch } from '../../utils/hooks/useAppDispatch';
 import { setTodos } from '../../redux/todosSlice';
 
+import { setFiltredTodos } from '../../redux/filtredTodos';
+import { TodosSorting } from '../TodosSorting';
+import { getSortedTodos } from '../../utils/getSortedTodos';
+import { getFiltredTodos } from '../../utils/getFiltredTodos';
+
 const StyledBox = styled(Box)({
   padding: '0 20px',
 });
@@ -34,50 +40,92 @@ const StyledTypography = styled(Typography)({
   padding: '21px',
 });
 
+type SliceAndDisplayTodosProps = {
+  displayedTodos: Todo[],
+  numberOfPage: string | undefined,
+};
+
 export const TodoListContent: React.FC = () => {
   const todos: Todo[] = useAppSelector(state => state.todos);
-  const [todosToDisplay, setTodosToDisplay] = useState<Todo[]>(todos);
+  const filtredTodos = useAppSelector(state => state.filtredTodos);
 
   const dispatch = useAppDispatch();
 
+  const [todosToDisplay, setTodosToDisplay] = useState<Todo[]>(filtredTodos);
   const [noTodos, setNoTodos] = useState(Boolean(todos.length));
 
   const { pageNumber } = useParams();
+  const [searchParams] = useSearchParams();
 
-  useEffect(() => {
-    if (!todos.length) {
+  const [todosFromLocalStorage] = useLocalStorage('todos', todos);
+
+  const checkForNoTodos = (todosToCheck: Todo[]) => {
+    if (!todosToCheck.length) {
       setNoTodos(false);
     } else {
       setNoTodos(true);
     }
-  }, [todos]);
+  };
 
-  const [todosFromLocalStorage] = useLocalStorage('todos', todos);
-
-  useEffect(() => {
+  const setTodosFromLocalStorageToRedux = (todosToSet: Todo[]) => {
     dispatch(
-      setTodos(todosFromLocalStorage),
+      setTodos(todosToSet),
     );
-  }, []);
+  };
 
-  useEffect(() => {}, []);
+  const setFiltredTodosToRedux = (todosToSet: Todo[]) => {
+    const filterType = searchParams.get('filter') || '';
 
-  useEffect(() => {
-    const currentPage = Number(pageNumber) || 1;
+    const filtredTodosToSet = getFiltredTodos({
+      todosToFilter: todosToSet,
+      filterType,
+    });
+
+    dispatch(
+      setFiltredTodos(
+        filtredTodosToSet,
+      ),
+    );
+  };
+
+  const sliceAndDisplayTodos = ({
+    displayedTodos,
+    numberOfPage,
+  }: SliceAndDisplayTodosProps) => {
+    const sortType = searchParams.get('sort') || '';
+
+    const currentPage = Number(numberOfPage) || 1;
     const itemsPerPage = 10;
 
     const startIndex = (currentPage - 1) * itemsPerPage;
 
-    const currentItems = todos.slice(
+    const currentItems = displayedTodos.slice(
       startIndex,
       startIndex + itemsPerPage,
     );
 
-    setTodosToDisplay(currentItems);
-  }, [pageNumber, todos]);
+    const sortedTodos = getSortedTodos({
+      todosToSort: currentItems,
+      sortType,
+    });
+
+    setTodosToDisplay(sortedTodos);
+  };
+
+  useEffect(() => checkForNoTodos(filtredTodos), [filtredTodos]);
+
+  useEffect(() => setTodosFromLocalStorageToRedux(todosFromLocalStorage), []);
+
+  useEffect(() => setFiltredTodosToRedux(todos), [todos, searchParams]);
+
+  useEffect(() => sliceAndDisplayTodos({
+    displayedTodos: filtredTodos,
+    numberOfPage: pageNumber,
+  }), [pageNumber, filtredTodos, searchParams]);
 
   return (
     <List>
+      <TodosSorting />
 
       {
         noTodos ? (

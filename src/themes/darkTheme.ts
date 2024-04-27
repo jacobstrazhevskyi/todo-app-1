@@ -20,6 +20,7 @@ export const darkTheme: ThemeObject = {
         main: '#221266',
         dark: '#170c47',
         light: '#4e4184',
+        contrastText: '#ffffff',
       },
       background: {
         default: '#121212',
