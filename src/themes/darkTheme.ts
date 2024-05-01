@@ -20,6 +20,7 @@ export const darkTheme: ThemeObject = {
         main: '#221266',
         dark: '#170c47',
         light: '#4e4184',
+        contrastText: '#ffffff',
       },
       background: {
         default: '#121212',
@@ -32,6 +33,15 @@ export const darkTheme: ThemeObject = {
       },
       error: {
         main: '#DC4C3E',
+      },
+    },
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 450,
+        md: 960,
+        lg: 1280,
+        xl: 1920,
       },
     },
     ...typographyObjectForThemes,

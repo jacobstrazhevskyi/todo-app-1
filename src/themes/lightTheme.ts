@@ -34,6 +34,15 @@ export const lightTheme: ThemeObject = {
         main: '#DC4C3E',
       },
     },
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 450,
+        md: 960,
+        lg: 1280,
+        xl: 1920,
+      },
+    },
     ...typographyObjectForThemes,
   },
 };
