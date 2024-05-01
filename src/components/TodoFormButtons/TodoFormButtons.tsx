@@ -15,6 +15,24 @@ import { Modal } from '../Modal';
 import { addTodo, editTodo, setTodos } from '../../redux/todosSlice';
 import useLocalStorage from '../../utils/hooks/useLocalStorage';
 
+import { localStorageKeys } from '../../auxFiles/localStorageKeys';
+import { modalAux } from '../../auxFiles/modalAux';
+
+const {
+  todosKeys: {
+    todos: todosLocalStorageKey,
+  },
+} = localStorageKeys;
+
+const {
+  titles: {
+    confirmDiscardTitle,
+  },
+  buttonsLables: {
+    discardLabel,
+  },
+} = modalAux;
+
 const StyledBox = styled(Box)({
   display: 'flex',
   justifyContent: 'flex-end',
@@ -70,7 +88,7 @@ export const TodoFormButtons: React.FC<Props> = ({
       .replace('T', ' ');
 
     const newTodo = {
-      id: todos.length + 1,
+      id: todos.length + 1, 
       name: todoName,
       description: todoDescription,
       creationDate: formattedDate,
@@ -111,7 +129,12 @@ export const TodoFormButtons: React.FC<Props> = ({
     navigate(-1);
   };
 
-  const [todosFromLocalStorage, setTodosFromLocalStorage] = useLocalStorage('todos', todos);
+  const [
+
+    todosFromLocalStorage,
+    setTodosFromLocalStorage,
+
+  ] = useLocalStorage(todosLocalStorageKey, todos);
 
   useEffect(() => {
     setTodosFromLocalStorage(todos);
@@ -171,8 +194,8 @@ export const TodoFormButtons: React.FC<Props> = ({
       <Modal
         opened={modalOpened}
         handleClose={handleModalClose}
-        title="Are you sure you want to discard your current task?"
-        confirmButtonLabel="Discard"
+        title={confirmDiscardTitle}
+        confirmButtonLabel={discardLabel}
         onAccept={modalAcceptHandler}
       />
     </StyledBox>
