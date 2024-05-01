@@ -9,6 +9,17 @@ import { IconButtonWithTooltipWrapper } from '../IconButtonWithTooltipWrapper';
 import { useAppDispatch } from '../../utils/hooks/useAppDispatch';
 import { deleteTodo } from '../../redux/todosSlice';
 
+import { modalAux } from '../../auxFiles/modalAux';
+
+const {
+  titles: {
+    confirmDeleteTitle,
+  },
+  buttonsLables: {
+    deleteLabel,
+  },
+} = modalAux;
+
 type Props = {
   todoId: number,
 };
@@ -44,10 +55,10 @@ export const DeleteTodoButton: React.FC<Props> = ({
 
       <Modal
         opened={modalOpen}
-        confirmButtonLabel="Delete"
+        confirmButtonLabel={deleteLabel}
         handleClose={handleModalClose}
         onAccept={handleModalAccept}
-        title="Are you sure you want to delete current task?"
+        title={confirmDeleteTitle}
       />
     </>
   );
