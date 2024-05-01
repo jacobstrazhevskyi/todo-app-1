@@ -7,6 +7,7 @@ import {
 
 import { TodosList } from '../TodosList/TodosList';
 import { TodoListPagination } from '../TodoListPagination';
+import { TodosFilters } from '../TodosFilters';
 
 const StyledBox = styled(Box)({
   width: '100%',
@@ -17,6 +18,7 @@ const StyledBox = styled(Box)({
 
 export const TodoListPage: React.FC = () => (
   <StyledBox>
+    <TodosFilters />
     <TodosList />
     <TodoListPagination />
   </StyledBox>
