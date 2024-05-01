@@ -7,7 +7,7 @@ import {
 
 import { Todo } from '../../types/Todo';
 import { TodoItemSecondaryAction } from '../TodoItemSecondAction';
-import { TodoItemContent } from '../TodoItemContent/TodoItemContent';
+import { TodoItemContent } from '../TodoItemContent';
 
 type Props = {
   todo: Todo,
@@ -25,6 +25,8 @@ export const TodoItem: React.FC<Props> = ({ todo }) => {
     name,
     completed,
     description,
+    creationDate,
+    modificationDate,
   } = todo;
 
   return (
@@ -41,6 +43,8 @@ export const TodoItem: React.FC<Props> = ({ todo }) => {
         todoName={name}
         todoDescription={description}
         completed={completed}
+        creationDate={creationDate}
+        modificationDate={modificationDate}
       />
     </StyledListItem>
   );
