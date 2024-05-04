@@ -46,7 +46,7 @@ export const EditTodoPage: React.FC = () => {
       <TodoFormButtons
         todoName={todoName}
         todoDescription={todoDescription}
-        buttonLabel="Edit"
+        buttonLabel="Save"
         isTodoCreation={false}
         setInputError={setInputError}
         setInputErrorText={setInputErrorText}
