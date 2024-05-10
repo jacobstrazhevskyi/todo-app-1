@@ -1,7 +1,7 @@
 {
   "name": "todo-app",
   "version": "0.1.0",
-  "homepage": "https://jacobstrazhevskyi.github.io/",
+  "homepage": "https://jacobstrazhevskyi.github.io/todo-app-1/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.3",
