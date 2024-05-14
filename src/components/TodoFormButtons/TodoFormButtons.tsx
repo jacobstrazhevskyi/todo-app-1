@@ -68,6 +68,13 @@ export const TodoFormButtons: React.FC<Props> = ({
 
   const [modalOpened, setModalOpened] = useState(false);
 
+  const [
+
+    todosFromLocalStorage,
+    setTodosFromLocalStorage,
+
+  ] = useLocalStorage(todosLocalStorageKey, todos);
+
   const checkForErrors = () => {
     if (!todoName.length) {
       setInputError(true);
@@ -96,14 +103,23 @@ export const TodoFormButtons: React.FC<Props> = ({
       modificationDate: formattedDate,
     };
 
+    const newTodos = [
+      ...todos,
+      newTodo,
+    ];
+
     dispatch(
       addTodo(newTodo),
     );
+
+    setTodosFromLocalStorage(newTodos);
 
     navigate(-1);
   };
 
   const todoEditHandler = () => {
+    const preparedTodoId = Number(todoId);
+
     checkForErrors();
 
     if (!todoName.length) {
@@ -116,37 +132,26 @@ export const TodoFormButtons: React.FC<Props> = ({
       .replace('T', ' ');
 
     const updatedTodo = {
-      ...todos[Number(todoId) - 1],
+      ...todos[preparedTodoId - 1],
       modificationDate: formattedDate,
       description: todoDescription,
       name: todoName,
     };
+  
+    const updatedTodos = [
+      ...todos.slice(0, (preparedTodoId - 1)),
+      updatedTodo,
+      ...todos.slice((preparedTodoId - 1) + 1),
+    ];
 
     dispatch(
       editTodo(updatedTodo),
     );
+
+    setTodosFromLocalStorage(updatedTodos);
     
     navigate(-1);
   };
-
-  const [
-
-    todosFromLocalStorage,
-    setTodosFromLocalStorage,
-
-  ] = useLocalStorage(todosLocalStorageKey, todos);
-
-  useEffect(() => {
-    setTodosFromLocalStorage(todos);
-  }, [todos]);
-
-  useEffect(() => {
-    dispatch(
-      setTodos(
-        todosFromLocalStorage,  
-      ),
-    );
-  }, []);
 
   const handleModalOpen = () => setModalOpened(true);
   const handleModalClose = () => setModalOpened(false);
