@@ -66,8 +66,6 @@ export const TodoListContent: React.FC = () => {
   const { pageNumber } = useParams();
   const [searchParams] = useSearchParams();
 
-  const [todosFromLocalStorage] = useLocalStorage(todosLocalStorageKey, todos);
-
   useEffect(() => {
     if (!filtredTodos.length) {
       setNoTodos(false);
@@ -76,9 +74,22 @@ export const TodoListContent: React.FC = () => {
     }
   }, [filtredTodos]);
 
+  const [
+
+    todosFromLocalStorage,
+    setTodosFromLocalStorage,
+
+  ] = useLocalStorage(todosLocalStorageKey, todos);
+
+  useEffect(() => {
+    setTodosFromLocalStorage(todos);
+  }, [todos]);
+
   useEffect(() => {
     dispatch(
-      setTodos(todosFromLocalStorage),
+      setTodos(
+        todosFromLocalStorage,
+      ),
     );
   }, []);
 
