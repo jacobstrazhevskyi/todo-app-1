@@ -21,7 +21,6 @@ import { useAppSelector } from '../../utils/hooks/useAppSelector';
 
 import { Todo } from '../../types/Todo';
 import { TodoItem } from '../TodoItem';
-import { CreateTodoButton } from '../CreateTodoButton';
 import useLocalStorage from '../../utils/hooks/useLocalStorage';
 import { useAppDispatch } from '../../utils/hooks/useAppDispatch';
 import { setTodos } from '../../redux/todosSlice';
@@ -148,8 +147,6 @@ export const TodoListContent: React.FC = () => {
           </StyledBox>
         )
       }
-
-      <CreateTodoButton />
     </List>
   );
 };
