@@ -1,12 +1,9 @@
 import React from 'react';
 
 import {
-  ListItem,
   MenuItem,
   Select,
   SelectChangeEvent,
-  Typography,
-  styled,
 } from '@mui/material';
 
 import { useSearchParams } from 'react-router-dom';
@@ -18,12 +15,6 @@ import { searchParamsKeys } from '../../auxFiles/searchParamsKeys';
 const {
   sort,
 } = searchParamsKeys;
-
-const StyledListItem = styled(ListItem)({
-  display: 'flex',
-  gap: '10px',
-  marginBottom: '10px',
-});
 
 const DEFAULT_SORT_BY = 'date';
 
@@ -51,38 +42,32 @@ export const TodosSorting: React.FC = () => {
   };
 
   return (
-    <StyledListItem>
-      <Typography>
-        Sort by:
-      </Typography>
-
-      <Select
-        value={sortBy || DEFAULT_SORT_BY}
-        size="small"
-        defaultValue={sortBy || DEFAULT_SORT_BY}
-        onChange={setSortingBy}
+    <Select
+      value={sortBy || DEFAULT_SORT_BY}
+      size="small"
+      defaultValue={sortBy || DEFAULT_SORT_BY}
+      onChange={setSortingBy}
+    >
+      <MenuItem
+        value="date"
       >
-        <MenuItem
-          value="date"
-        >
-          Date
-        </MenuItem>
-        <MenuItem
-          value="date-rv"
-        >
-          Date reverse
-        </MenuItem>
-        <MenuItem
-          value="notcompleted"
-        >
-          Not completed
-        </MenuItem>
-        <MenuItem
-          value="completed"
-        >
-          Completed
-        </MenuItem>
-      </Select>
-    </StyledListItem>
+        Date
+      </MenuItem>
+      <MenuItem
+        value="date-rv"
+      >
+        Date reverse
+      </MenuItem>
+      <MenuItem
+        value="notcompleted"
+      >
+        Not completed
+      </MenuItem>
+      <MenuItem
+        value="completed"
+      >
+        Completed
+      </MenuItem>
+    </Select>
   );
 };

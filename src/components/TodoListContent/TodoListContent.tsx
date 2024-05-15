@@ -27,12 +27,12 @@ import { useAppDispatch } from '../../utils/hooks/useAppDispatch';
 import { setTodos } from '../../redux/todosSlice';
 
 import { setFiltredTodos } from '../../redux/filtredTodos';
-import { TodosSorting } from '../TodosSorting';
 import { getSortedTodos } from '../../utils/getSortedTodos';
 import { getFiltredTodos } from '../../utils/getFiltredTodos';
 
 import { searchParamsKeys } from '../../auxFiles/searchParamsKeys';
 import { localStorageKeys } from '../../auxFiles/localStorageKeys';
+import { TodosSortingAndFiltering } from '../TodosSortingAndFiltering/TodosSortingAndFiltering';
 
 const {
   filter,
@@ -131,7 +131,7 @@ export const TodoListContent: React.FC = () => {
 
   return (
     <List>
-      <TodosSorting />
+      <TodosSortingAndFiltering />
 
       {
         noTodos ? (

@@ -2,11 +2,14 @@ import React, { useEffect } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import { Box, styled } from '@mui/material';
-import { Button } from '../Button';
+import {
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material';
+
 import { getSearchWith } from '../../utils/getSearchWith';
 
-import { buttonVariants } from '../../auxFiles/buttonVariants';
 import { filterTypes } from '../../auxFiles/filterTypes';
 
 import { searchParamsKeys } from '../../auxFiles/searchParamsKeys';
@@ -16,27 +19,10 @@ const {
 } = searchParamsKeys;
 
 const {
-  contained,
-  outlined,
-} = buttonVariants;
-
-const {
+  all,
   completed,
   notcompleted,
 } = filterTypes;
-
-const StyledBox = styled(Box)({
-  display: 'flex',
-  marginBottom: '10px',
-  gap: '5px',
-});
-
-const StyledButton = styled(Button)(({ theme }) => ({
-  [theme.breakpoints.down('sm')]: {
-    fontSize: '13px',
-    padding: '5px 10px',
-  },
-}));
 
 export const TodosFilters: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -50,10 +36,34 @@ export const TodosFilters: React.FC = () => {
   const setCompletedFilter = () => setSearchParams(
     getSearchWith(searchParams, { filter: completed }),
   );
-  
+
   const setNotCompletedFilter = () => setSearchParams(
     getSearchWith(searchParams, { filter: notcompleted }),
   );
+
+  const HandleFilterSelect = (
+    event: SelectChangeEvent<unknown>,
+  ) => {
+    const { value } = event.target;
+
+    switch (value) {
+      case all:
+        setAllFilter();
+        break;
+
+      case completed:
+        setCompletedFilter();
+        break;
+
+      case notcompleted:
+        setNotCompletedFilter();
+        break;
+
+      default:
+        setAllFilter();
+        break;
+    }
+  };
 
   useEffect(() => {
     if (!filterType) {
@@ -62,25 +72,26 @@ export const TodosFilters: React.FC = () => {
   }, [searchParams]);
 
   return (
-    <StyledBox>
-      <StyledButton
-        variant={!filterType ? contained : outlined}
-        onClick={setAllFilter}
+    <Select
+      defaultValue={filterType || all}
+      onChange={HandleFilterSelect}
+      size="small"
+    >
+      <MenuItem
+        value={all}
       >
         All
-      </StyledButton>
-      <StyledButton
-        variant={filterType === completed ? contained : outlined}
-        onClick={setCompletedFilter}
+      </MenuItem>
+      <MenuItem
+        value={completed}
       >
         Completed
-      </StyledButton>
-      <StyledButton
-        variant={filterType === notcompleted ? contained : outlined}
-        onClick={setNotCompletedFilter}
+      </MenuItem>
+      <MenuItem
+        value={notcompleted}
       >
         Not completed
-      </StyledButton>
-    </StyledBox>
+      </MenuItem>
+    </Select>
   );
 };
