@@ -20,6 +20,7 @@ const StyledBox3 = styled(Box)({
   display: 'flex',
   justifyContent: 'flexStart',
   marginTop: '10px',
+  paddingBottom: '20px',
 });
 
 export const TodoListPagination: React.FC = () => {

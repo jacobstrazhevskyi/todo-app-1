@@ -13,6 +13,7 @@ const StyledBox = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  paddingTop: '20px',
 });
 
 export const AppHeader: React.FC = () => (
