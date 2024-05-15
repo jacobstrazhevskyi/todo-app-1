@@ -17,6 +17,14 @@ import { localStorageKeys } from '../../auxFiles/localStorageKeys';
 import { aux } from '../../auxFiles/OSTheme';
 import useLocalStorage from '../../utils/hooks/useLocalStorage';
 
+import { aux as themeNamesAux } from '../../auxFiles/themeNames'; 
+
+const {
+  themeNames: {
+    OSFollowed,
+  },
+} = themeNamesAux;
+
 const prepareThemeName = (selectedThemeName: string) => {
   const themeNameSplited = selectedThemeName.split(/(?<![A-Z])(?=[A-Z])/);
 
@@ -33,7 +41,17 @@ const CentredSelectMenu = styled(Select)({
   marginBottom: '30px',
 });
 
+const {
+  themesKeys: {
+    theme,
+  },
+} = localStorageKeys;
+
 export const ThemeSwitchMenu: React.FC = () => {
+  const { currentOSTheme } = aux;
+  
+  const [defaultSelectMenuValue] = useLocalStorage(theme, currentOSTheme);
+
   const dispatch = useAppDispatch();
 
   const selectThemeMenuHandler = (
@@ -43,16 +61,6 @@ export const ThemeSwitchMenu: React.FC = () => {
 
     dispatch(selectTheme(value as string));
   };
-
-  const {
-    themesKeys: {
-      theme,
-    },
-  } = localStorageKeys;
-
-  const { currentOSTheme } = aux;
-
-  const [defaultSelectMenuValue] = useLocalStorage(theme, currentOSTheme);
 
   return (
     <CentredSelectMenu
@@ -69,6 +77,13 @@ export const ThemeSwitchMenu: React.FC = () => {
           {prepareThemeName(themeName)}
         </MenuItem>
       ))}
+
+      <MenuItem
+        value={OSFollowed}
+        key={uuid()}
+      >
+        OS followed
+      </MenuItem>
     </CentredSelectMenu>
   );
 };
