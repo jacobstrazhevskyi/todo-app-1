@@ -8,8 +8,10 @@ import {
 import { TodosList } from '../TodosList/TodosList';
 import { TodoListPagination } from '../TodoListPagination';
 import { CreateTodoButton } from '../CreateTodoButton';
+import { CreateTodoFloatingButton } from '../CreateTodoFloatingButton';
 
 const StyledBox = styled(Box)({
+  position: 'relative',
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
@@ -21,5 +23,6 @@ export const TodoListPage: React.FC = () => (
     <CreateTodoButton />
     <TodosList />
     <TodoListPagination />
+    <CreateTodoFloatingButton />
   </StyledBox>
 );
