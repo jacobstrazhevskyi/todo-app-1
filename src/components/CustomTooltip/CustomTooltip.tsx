@@ -1,15 +1,20 @@
-import { Tooltip } from '@mui/material';
+import { Tooltip, TooltipProps } from '@mui/material';
 import React, { ReactElement } from 'react';
 
-type Props = {
+interface Props extends Omit<TooltipProps, 'title'> {
   children: ReactElement<any, any>,
   tooltipTitle: string,
 }
 
-export const CustomTooltip: React.FC<Props> = ({ children, tooltipTitle }) => (
+export const CustomTooltip: React.FC<Props> = ({
+  children,
+  tooltipTitle,
+  ...restProps
+}) => (
   <Tooltip
     title={tooltipTitle}
     enterDelay={500}
+    {...restProps}
   >
     {children}
   </Tooltip>
