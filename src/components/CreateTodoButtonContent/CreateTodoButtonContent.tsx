@@ -20,9 +20,11 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const StyledLink = styled(Link)({
-  width: '100%',
-});
+const StyledLink = styled(Link)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+  },
+}));
 
 export const CreateTodoButtonContent: React.FC = () => (
 
