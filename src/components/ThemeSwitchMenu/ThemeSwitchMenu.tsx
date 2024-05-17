@@ -6,7 +6,6 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  styled,
 } from '@mui/material';
 
 import { useAppDispatch } from '../../utils/hooks/useAppDispatch';
@@ -36,11 +35,6 @@ const prepareThemeName = (selectedThemeName: string) => {
   return `${resultThemeName} theme`;
 };
 
-const CentredSelectMenu = styled(Select)({
-  margin: '0 auto',
-  marginBottom: '30px',
-});
-
 const {
   themesKeys: {
     theme,
@@ -63,7 +57,7 @@ export const ThemeSwitchMenu: React.FC = () => {
   };
 
   return (
-    <CentredSelectMenu
+    <Select
       autoWidth
       defaultValue={defaultSelectMenuValue}
       onChange={selectThemeMenuHandler}
@@ -84,6 +78,6 @@ export const ThemeSwitchMenu: React.FC = () => {
       >
         OS followed
       </MenuItem>
-    </CentredSelectMenu>
+    </Select>
   );
 };

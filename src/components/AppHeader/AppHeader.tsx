@@ -16,11 +16,26 @@ const StyledBox = styled(Box)({
   paddingTop: '20px',
 });
 
+const StyledBoxForThemeSwitchMenu = styled(Box)(({ theme }) => ({
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'flex-end',
+  marginBottom: '30px',
+
+  [theme.breakpoints.down('sm')]: {
+    justifyContent: 'center',
+  },
+}));
+
 export const AppHeader: React.FC = () => (
   <StyledBox>
-    <Title 
+    <Title
       titleText="Todo App"
     />
-    <ThemeSwitchMenu />
+
+    <StyledBoxForThemeSwitchMenu>
+      <ThemeSwitchMenu />
+    </StyledBoxForThemeSwitchMenu>
+
   </StyledBox>
 );
