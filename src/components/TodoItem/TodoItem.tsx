@@ -37,6 +37,9 @@ export const TodoItem: React.FC<Props> = ({ todo }) => {
           todoId={id}
         />
       )}
+      onContextMenu={(event) => {
+        event.preventDefault();
+      }}
     >
       <TodoItemContent
         todoId={id}
